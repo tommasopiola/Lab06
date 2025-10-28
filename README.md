@@ -116,6 +116,6 @@ Lab06/
 `Autonoleggio` (`model.py`), insieme alle classi `Automobile` (`automobile.py`) e `Noleggio` (`noleggio.py`), 
 che ne costituiscono e supportano il funzionamento.
 - Il package **_UI_** contiene: il file `view.py` che definisce la classe `View`, che implementa l’interfaccia grafica 
-utilizzando `flet` e il file `controller.py` che funge da intermediario tra la View e il Modello. Inoltre, qui è 
-presente il file `alert.py` in cui è definita la classe `AlertManager` usata per mostrare gli alert mediante il 
-metodo `show_alert()`. 
+utilizzando `flet` e il file `controller.py` contenente la classe `Controller` che funge da intermediario tra la View 
+e il Modello. Inoltre, qui è presente il file `alert.py` in cui è definita la classe `AlertManager` usata per mostrare 
+gli alert mediante il metodo `show_alert()`. 
