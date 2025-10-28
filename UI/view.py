@@ -93,7 +93,8 @@ class View:
                 content=self.lista_auto,
                 height=200,
                 border=ft.border.all(1, ft.Colors.BLACK),
-                padding=5
+                padding=5,
+                expand=True
             ),
             ft.Divider(),
 
@@ -111,10 +112,13 @@ class View:
                 content=self.lista_auto_ricerca,
                 height=200,
                 border=ft.border.all(1, ft.Colors.BLACK),
-                padding=5
+                padding=5,
+                expand=True
             )
+
         )
 
+        self.page.scroll = "adaptive"
         self.page.update()
 
     def cambia_tema(self, e):
