@@ -25,8 +25,6 @@ class View:
         self.txt_titolo = None
         self.txt_responsabile = None
 
-        # Non obbligatorio mettere già qui tutti gli elementi UI
-
     def show_alert(self, messaggio):
         self.alert.show_alert(messaggio)
 
@@ -64,6 +62,8 @@ class View:
 
         # Altri Pulsanti da implementare (es. "Mostra" e "Cerca")
         # TODO
+        pulsante_mostra_auto = ft.ElevatedButton("Mostra", on_click=self.controller.mostra_automobili)
+        pulsante_cerca_auto = ft.ElevatedButton("Cerca", on_click=self.controller.cerca_automobili)
 
         # --- LAYOUT ---
         self.page.add(
@@ -84,9 +84,38 @@ class View:
             # Sezione 3
             # TODO
 
+            ft.Text("Automobili", size=20),
+            ft.Row(
+                spacing=200,
+                controls=[pulsante_mostra_auto],
+                alignment=ft.MainAxisAlignment.CENTER),
+            ft.Container(
+                content=self.lista_auto,
+                height=200,
+                border=ft.border.all(1, ft.Colors.BLACK),
+                padding=5
+            ),
+            ft.Divider(),
+
             # Sezione 4
             # TODO
+
+            ft.Text("Cerca Automobile", size=20),
+            ft.Row(
+                spacing=200,
+                controls=[self.input_modello_auto, pulsante_cerca_auto],
+                alignment=ft.MainAxisAlignment.CENTER
+            ),
+            ft.Divider(),
+            ft.Container(
+                content=self.lista_auto_ricerca,
+                height=200,
+                border=ft.border.all(1, ft.Colors.BLACK),
+                padding=5
+            )
         )
+
+        self.page.update()
 
     def cambia_tema(self, e):
         self.page.theme_mode = ft.ThemeMode.DARK if self.toggle_cambia_tema.value else ft.ThemeMode.LIGHT
