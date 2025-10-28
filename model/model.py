@@ -9,6 +9,7 @@ from model.noleggio import Noleggio
     - Interagisce con il database
 '''
 
+
 class Autonoleggio:
     def __init__(self, nome, responsabile):
         self._nome = nome
@@ -35,8 +36,35 @@ class Autonoleggio:
             Funzione che legge tutte le automobili nel database
             :return: una lista con tutte le automobili presenti oppure None
         """
+        cnx = get_connection()
+        result = []
+        if cnx is not None:
+            cursor = cnx.cursor(dictionary=True)
+            query = "SELECT codice, marca, modello, anno, posti, disponibile FROM automobile"
 
-        # TODO
+            try:
+                cursor.execute(query)
+                for row in cursor:
+                    auto = Automobile(
+                        codice=row["codice"],
+                        marca=row["marca"],
+                        modello=row["modello"],
+                        anno=row["anno"],
+                        posti=row["posti"],
+                        disponibile=bool(row["disponibile"])
+                    )
+                    result.append(auto)
+                cursor.close()
+                cnx.close()
+                return result
+            except Exception as e:
+                print(f"Errore durante l'esecuzione della query (get_automobili): {e}")
+                cursor.close()
+                cnx.close()
+                return None
+        else:
+            print("Errore di connessione al database (get_automobili)")
+            return None
 
     def cerca_automobili_per_modello(self, modello) -> list[Automobile] | None:
         """
@@ -44,4 +72,32 @@ class Autonoleggio:
             :param modello: il modello dell'automobile
             :return: una lista con tutte le automobili di marca e modello indicato oppure None
         """
-        # TODO
+        cnx = get_connection()
+        result = []
+        if cnx is not None:
+            cursor = cnx.cursor(dictionary=True)
+            query = "SELECT codice, marca, modello, anno, posti, disponibile FROM automobile WHERE modello = %s"
+
+            try:
+                cursor.execute(query, (modello,))
+                for row in cursor:
+                    auto = Automobile(
+                        codice=row["codice"],
+                        marca=row["marca"],
+                        modello=row["modello"],
+                        anno=row["anno"],
+                        posti=row["posti"],
+                        disponibile=bool(row["disponibile"])
+                    )
+                    result.append(auto)
+                cursor.close()
+                cnx.close()
+                return result
+            except Exception as e:
+                print(f"Errore durante l'esecuzione della query (cerca_automobili_per_modello): {e}")
+                cursor.close()
+                cnx.close()
+                return None
+        else:
+            print("Errore di connessione al database (cerca_automobili_per_modello)")
+            return None
