@@ -8,8 +8,9 @@ from model.model import Autonoleggio
     - Gestisce la logica del flusso dell'applicazione
 '''
 
+
 class Controller:
-    def __init__(self, view : View, model : Autonoleggio):
+    def __init__(self, view: View, model: Autonoleggio):
         self._model = model
         self._view = view
 
@@ -29,3 +30,48 @@ class Controller:
 
     # Altre Funzioni Event Handler
     # TODO
+    def mostra_automobili(self, e):
+
+        self._view.lista_auto.controls.clear()
+        self._view.lista_auto_ricerca.controls.clear()
+
+        lista_auto = self._model.get_automobili()
+
+        if lista_auto is None:
+            self._view.show_alert("Errore di connessione al database o di lettura dei dati.")
+        elif len(lista_auto) == 0:
+            self._view.lista_auto.controls.append(
+                ft.Text("Nessuna automobile trovata nel database.", weight=ft.FontWeight.BOLD))
+        else:
+            for auto in lista_auto:
+                self._view.lista_auto.controls.append(
+                    ft.Text(str(auto))
+                )
+
+        self._view.update()
+
+    def cerca_automobili(self, e):
+
+        modello_cercato = self._view.input_modello_auto.value
+        self._view.lista_auto_ricerca.controls.clear()
+
+        if not modello_cercato:
+            self._view.show_alert("Inserisci un modello da cercare!")
+            self._view.update()
+            return
+
+        lista_auto_cercate = self._model.cerca_automobili_per_modello(modello_cercato)
+
+        if lista_auto_cercate is None:
+            self._view.show_alert("Errore di connessione al database o di ricerca dei dati.")
+        elif len(lista_auto_cercate) == 0:
+            self._view.lista_auto_ricerca.controls.append(
+                ft.Text(f"Nessuna automobile trovata per il modello '{modello_cercato}'.", weight=ft.FontWeight.BOLD)
+            )
+        else:
+            for auto in lista_auto_cercate:
+                self._view.lista_auto_ricerca.controls.append(
+                    ft.Text(str(auto))
+                )
+
+        self._view.update()
