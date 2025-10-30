@@ -33,8 +33,6 @@ class Controller:
     def mostra_automobili(self, e):
 
         self._view.lista_auto.controls.clear()
-        self._view.lista_auto_ricerca.controls.clear()
-
         lista_auto = self._model.get_automobili()
 
         if lista_auto is None:
@@ -45,7 +43,7 @@ class Controller:
         else:
             for auto in lista_auto:
                 self._view.lista_auto.controls.append(
-                    ft.Text(str(auto))
+                    ft.Text(f"{auto}")
                 )
 
         self._view.update()

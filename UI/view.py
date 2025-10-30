@@ -94,7 +94,7 @@ class View:
                 height=200,
                 border=ft.border.all(1, ft.Colors.BLACK),
                 padding=5,
-                expand=True
+                #expand=True
             ),
             ft.Divider(),
 
@@ -113,7 +113,7 @@ class View:
                 height=200,
                 border=ft.border.all(1, ft.Colors.BLACK),
                 padding=5,
-                expand=True
+                #expand=True
             )
 
         )
